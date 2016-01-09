@@ -37,20 +37,21 @@ app.use(express.static('views')); // must do this to get external files
 
 app.get('*', function(req,res,next){
 
-
-    console.log(req.ip + ', ' + req.path);
-
     IPLOGGER.findOne({'ip': req.ip }, '', function(err, IP){
 
         if(!IP){
 
             IP = new IPLOGGER({
+
                 ip : req.ip,
                 count : 1
+
             });
 
             IP.save(function(){
+
                 next();
+
             });
 
         }else{
@@ -58,28 +59,27 @@ app.get('*', function(req,res,next){
             IP.count += 1;
             IP.save();
             next();
+
         }
 
     });
 
-    
-
 });
-
 
 // paths
 app.get('/login', function(req, res){
 
     app.set('layout', 'layout_visit');
     res.render('login', {
+
         data : {
             time: new Date(),
             activePath: req.path
         }
+
     });
 
 });
-
 
 // root path get requests
 app.get('/', function(req, res) {
