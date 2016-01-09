@@ -22,25 +22,10 @@ app.use(expressLayouts);
 app.set('layout', 'layout_visit');  // default to layout_visit.ejs, not layout.ejs
 app.use(express.static('views')); // must do this to get external files
 
-var render = {
-
-    visit : function(){
-
-        app.set('layout', 'layout_visit');
-
-    },
-
-    member : function(){
-
-        app.set('layout', 'layout_member');
-
-    }
-
-};
-
+// paths
 app.get('/login', function(req, res){
 
-    render.visit();
+    app.set('layout', 'layout_visit');
     res.render('login', {
         data : {
             time: new Date(),
@@ -54,7 +39,7 @@ app.get('/login', function(req, res){
 // root path get requests
 app.get('/', function(req, res) {
 
-    render.member();
+    app.set('layout', 'layout_member');
     res.render('root', {
         data : {
             time: new Date(),
@@ -67,7 +52,7 @@ app.get('/', function(req, res) {
 // root path get requests
 app.get('/users', function(req, res) {
 
-    render.member();
+    app.set('layout', 'layout_member');
     res.render('users', {
         data : {
             time: new Date(),
