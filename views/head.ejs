@@ -1,0 +1,31 @@
+<%
+
+    var paths = ['/', '/users'],
+    classNames = [];
+
+    paths.forEach(function(path){
+
+        console.log('well');
+
+        if(data.activePath === path){
+
+            classNames.push('head_active')
+
+        }else{
+
+            classNames.push('head_inactive');
+
+        }
+
+    });
+
+    console.log(classNames);
+
+%>
+
+<div id="head_container" ><!-- head.ejs -->
+
+    <h1 class="head_h1">The ScriptBook</h1>
+    <p><span class="<%= classNames[0] %>" ><a href="/" >home</a></span> | <span class="<%= classNames[1] %>" ><a href="/users" >users</a><span> </p>
+    
+</div>
