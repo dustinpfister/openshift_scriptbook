@@ -19,16 +19,43 @@ app = express();
 // use EJS for rendering
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
+app.set('layout', 'layout_visit');  // default to layout_visit.ejs, not layout.ejs
 app.use(express.static('views')); // must do this to get external files
+
+var render = {
+
+    visit : function(){
+
+        app.set('layout', 'layout_visit');
+
+    },
+
+    member : function(){
+
+        app.set('layout', 'layout_member');
+
+    }
+
+};
+
+app.get('/login', function(req, res){
+
+    render.visit();
+    res.render('login', {
+        data : {
+            time: new Date(),
+            activePath: req.path
+        }
+    });
+
+});
 
 
 // root path get requests
 app.get('/', function(req, res) {
 
-    console.log(req.path);
-
-    //res.send('scriptbook');
-    res.render('root.ejs', {
+    render.member();
+    res.render('root', {
         data : {
             time: new Date(),
             activePath: req.path
@@ -40,10 +67,8 @@ app.get('/', function(req, res) {
 // root path get requests
 app.get('/users', function(req, res) {
 
-    console.log(req.path);
-
-    //res.send('scriptbook');
-    res.render('users.ejs', {
+    render.member();
+    res.render('users', {
         data : {
             time: new Date(),
             activePath: req.path
