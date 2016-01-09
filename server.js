@@ -9,15 +9,8 @@
 var express = require('express'),
 openShift = require('./lib/openshift.js').openShiftObj,
 
-    // express app
-    app = express();
-// trust proxy
-app.enable('trust proxy');
-
-// lets try EJS
-app.set('view engine', 'ejs');
-app.use(require('express-ejs-layouts'));
-app.use(express.static('views')); // must do this to get external files
+// express app
+app = express();
 
 // root path get requests
 app.get('/', function(req, res) {
