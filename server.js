@@ -1,7 +1,7 @@
 #!/bin/env node
 
 var express = require('express'),
-openShift = require('./lib/openshift.js').openShiftObj,
+openShift = require('./openshift.js').openShiftObj,
 
 // express app
 app = express();
