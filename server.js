@@ -101,8 +101,6 @@ app.use( expressLayouts );
 app.set( 'layout', 'layout_visit' );  // default to layout_visit.ejs, not layout.ejs
 app.use( express.static('views') ); // must do this to get external files
 
-var yep = false;
-
 // Paths
 // ip logger
 app.get('*', function(req,res,next){
@@ -187,10 +185,20 @@ app.get('/login', function(req, res){
     });
 
 });
+// login post
 app.post('/login',
+    // pre login
+    function(req,res,next){
+
+        console.log(req.body);
+
+        next();
+    },
+    // authenticate
     passport.authenticate('local', {
-        failureRedirect: '/login'
+            failureRedirect: '/login'
     }),
+    // success
     function(req, res) {
 
         console.log(req.user.name +' loggin!');
@@ -199,12 +207,33 @@ app.post('/login',
     }
 );
 
+app.get('/signup', function(req,res,next){
+
+    console.log('hello???');
+
+    app.set('layout', 'layout_visit');
+    res.render('signup', {
+        data : {
+            time: new Date(),
+            activePath: req.path
+        }
+    });
+
+});
+app.post('/signup', function(req,res,next){
+
+    users.createUser(req.body);
+
+    res.redirect('/login');
+
+});
 
 // root path get requests
 app.get('/', function(req, res) {
 
     app.set('layout', 'layout_member');
     res.render('root', {
+        user : req.user,
         data : {
             time: new Date(),
             activePath: req.path
@@ -218,6 +247,7 @@ app.get('/users', function(req, res) {
 
     app.set('layout', 'layout_member');
     res.render('users', {
+        user : req.user,
         data : {
             time: new Date(),
             activePath: req.path
