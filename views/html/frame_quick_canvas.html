@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Scriptbook Quick Canvas iframe page</title>
+        <style>
+
+body{
+
+    margin:0px;
+    padding:0px;
+    color: #ffffff;
+    background: #000000;
+
+}
+
+#quickcanvas_canvas{
+
+    width: 320px;
+    height: 240px;
+    background:grey;
+
+}
+
+#icon{
+
+    display:none;
+
+}
+
+        </style>
+    </head>
+    <body>
+        <img id="icon" src="/img/no_canvas_one.png">
+        <canvas id="quickcanvas_canvas" width="320" height="240"><img src="/img/no_canvas_one.png"></canvas>
+        
+        <script>
+
+var snapCount = 0,
+thread = function(){
+
+    var img,canvas,context;
+
+    setTimeout(thread, 1000);
+
+    // detect if there is more then one script element (if only this script then a script was injected)
+    if(document.getElementsByTagName('script').length >= 2){
+
+        img = document.getElementById('icon')
+        canvas = document.getElementById('quickcanvas_canvas'),
+        context = canvas.getContext('2d');
+
+        console.log('okay lets make this a good one, say cheese.');
+
+        img.src = canvas.toDataURL();
+        
+
+        //document.body.insertBefore(img, canvas);
+
+        snapCount++;
+    }
+
+};
+
+thread();
+
+        </script>
+    </body>
+</html>
