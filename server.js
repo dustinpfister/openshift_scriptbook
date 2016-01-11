@@ -228,6 +228,13 @@ app.post('/signup', function(req,res,next){
 
 });
 
+// logout namespace
+app.get('/logout', function(req, res) {
+
+    req.logout();
+    res.redirect('/login');
+});
+
 // root path get requests
 app.get('/', function(req, res) {
 
