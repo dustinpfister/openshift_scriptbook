@@ -10,3 +10,103 @@ body{
    margin-right: 10px;
 
 }
+
+/*  NEW POSTTYPE! delete older stuff */
+.quickcanvas_image_large{
+
+    width:320px;
+    height:240px;
+
+}
+
+.quickcanvas_image_small{
+
+    width:64px;
+    height:64px;
+
+}
+
+.quickcanvas_container{
+
+}
+
+.quickcanvas_content{
+
+    display: none;
+
+    width: 640px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.quickcanvas_code{
+    color: #000000;
+    background: #afafaf;
+    width:320px;
+    height:240px;
+}
+
+.quickcanvas_iframe{
+    
+    
+    
+    outline: 2px solid #0000ff;
+    
+    border: 0px;
+    width:320px;
+    height:240px;
+    overflow: hidden;
+
+}
+
+.quickcanvas_icon_large{
+
+    display:block;
+
+    width:320px;
+    height:240px;
+    background: #ff0000;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.quickcanvas_icon_small{
+
+    display:none;
+
+    width:64px;
+    height:64px;
+    background: black;
+   
+}
+
+
+
+.quickcanvas_controls{
+
+    display:none;
+    
+    width: 640px;
+
+    margin-left:auto;
+    margin-right:auto;
+}
+
+
+.post_container{
+    background : #000000;
+    color: #ffffff;
+    padding: 10px;
+}
+
+.posttype_inactive_interface{
+
+    display:none;
+
+}
+
+.posttype_active_interface{
+
+    display:block;
+
+}

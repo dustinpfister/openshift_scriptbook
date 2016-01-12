@@ -16,6 +16,7 @@ Strategy = require('passport-local').Strategy,
 
 // users
 users = require('./lib/users.js'),
+wallpost = require('./lib/wallpost.js'),
 
 // express app
 app = express();
@@ -249,6 +250,194 @@ app.get('/', function(req, res) {
 
 });
 
+// the user namespace ( /user /user/ /user/username )
+app.get(/wall(\/.*)?/, function(req, res) {
+
+    var username;
+
+    // if visiter is logged in
+    if (req.user) {
+
+        username = req.user.name
+
+        if (req.url.length > 6) {
+
+            username = req.url.replace(/\/wall\//, '');
+
+        }
+
+        users.findProfile(username, function(err, user) {
+
+            // if user found
+            if (user) {
+
+                // find the users profile
+                users.findProfile(username, function(err, user) {
+
+                    // do they have posts?
+                    wallpost.getPosts(req, user.name, function(wallposts) {
+
+                        var len, i, html, currentPost;
+
+                        if (wallposts !== '') {
+
+                            // render posts
+                            len = wallposts.length;
+                            i = len;
+                            html = '';
+
+                            // render all posts for now
+                            while (i--) {
+
+                                // html context that will be in all posts
+                                html += '<div data-posttype=\"' + wallposts[i].postType + '\" id=\"post_container_' + wallposts[i]._id + '\" class=\"post_container\">' +
+                                    //' <div class=\"post_info\">'+wallposts[i].postOwner+'<\/div>'
+                                    ' <div class=\"post_info\"> var fromUser = \"<a href="/user/'+wallposts[i].postOwner+'">' + wallposts[i].postOwner + '</a>\", at = new Date(\"' + wallposts[i].postTime + '\")' +
+                                    ', postType = \"' + wallposts[i].postType + '\";<\/div>';
+
+                                // say post
+                                if (wallposts[i].postType === 'say') {
+
+                                    html += '<div class="post_say"><p>' + wallposts[i].postContent + '<\/p><\/div>';
+
+                                }
+
+                                // quick canvas post
+                                if (wallposts[i].postType === 'quickcanvas') {
+
+                                    html += '<div class=\"quickcanvas_container\">' +
+                                        '<div class=\"quickcanvas_icon_large\"><img class=\"quickcanvas_image_large\" src=\"' + wallposts[i].postContent.thum + '\"><\/div>' +
+                                        '<div class=\"quickcanvas_icon_small\"><img class=\"quickcanvas_image_small\" src=\"' + wallposts[i].postContent.thum + '\"><\/div>' +
+                                        '<div class=\"quickcanvas_content\">' +
+                                        '<textarea class=\"quickcanvas_code\">' + wallposts[i].postContent.code + '<\/textarea>' +
+                                        '<iframe class=\"quickcanvas_iframe\" scrolling=\"no\" seamless=\"seamless\" src=\"\/html\/frame_quick_canvas.html\"><\/iframe>' +
+                                        '<\/div>' +
+                                        '<div class=\"quickcanvas_controls\">' +
+                                        '<input class=\"quickcanvas_button_runkill\" type=\"button\" value=\"RUN\">' +
+                                        '<input class=\"quickcanvas_button_hide\" type=\"button\" value=\"hide\">' +
+                                        '<\/div>' +
+                                        '<\/div>';
+
+                                }
+
+                                // end post container
+                                html += '<\/div><!-- end post -->';
+                            }
+
+                            // render
+/*
+                            res.render('userwall', {
+
+                                username: req.user.name,
+                                wallusername: user.name,
+                                inject_wall_posts: html
+
+                            });
+*/
+                            app.set('layout', 'layout_member');
+                            res.render('wall', {
+                                user : req.user,
+                                data : {
+                                    time: new Date(),
+                                    activePath: req.path
+                                },
+                                wall : {
+                                    owner: user.name,
+                                    posts: html
+                                }
+                            });
+
+                        } else {
+
+                           /*
+                            res.render('userwall', {
+                                username: req.user.name,
+                                wallusername: user.name,
+                                inject_wall_posts: '<div>why not post something<\/div>'
+                            });
+                            */
+
+                            app.set('layout', 'layout_member');
+                            res.render('wall', {
+                                user : req.user,
+                                data : {
+                                    time: new Date(),
+                                    activePath: req.path
+                                },
+                                wall : {
+                                    owner: user.name,
+                                    posts: '<div>why not post something<\/div>'
+                                }
+                            });
+
+                        }
+
+                    });
+
+                });
+
+            } else {
+
+                app.set('layout', 'layout_member');
+                res.render('usernotfound', {});
+
+            }
+
+        });
+
+    }
+
+});
+app.post(/wall(\/.*)?/, function(req, res) {
+
+    console.log('post from /wall');
+    console.log(req.get('scriptbook-post'));
+
+    // if wall post
+    if (req.get('scriptbook-post') === 'wallpost') {
+
+        wallpost.postToUserPage(req, function(status, post) {
+
+            // if success send back the wallpost object
+            if (status === 'success') {
+
+                res.send(post);
+
+                // send null if not sucess
+            } else {
+
+                res.send(null);
+
+            }
+
+        });
+
+        // else if not a wall post
+    } else {
+
+        //if(req.get('postcheck')){
+        if (req.get('scriptbook-post') === 'postcheck') {
+
+            // res.send(JSON.stringify({postcheck: 'sure i will get on that.'}));
+            //res.send(req.get('postcheck'));
+            wallpost.postCheck(req, function(post) {
+
+                res.send(JSON.stringify(post));
+
+            });
+
+        } else {
+
+            res.send(JSON.stringify({
+                nullpost: true
+            }));
+
+        }
+
+    }
+
+});
+
 // root path get requests
 app.get('/users', function(req, res) {
 
@@ -262,6 +451,71 @@ app.get('/users', function(req, res) {
     });
 
 });
+
+
+/*
+// the user namespace ( /user /user/ /user/username )
+app.get(/user(\/.*)?/, function(req, res) {
+
+    var username = req.user.name,
+    atHome = true;
+
+    if (req.url.length > 6) {
+
+        username = req.url.replace(/\/user\//, '');
+        atHome = false;
+    }
+
+    // get the user profile
+    users.findProfile(username, function(err, user) {
+
+        if(user){
+            
+            if(atHome){
+
+               users.getUserNames(function(names) {
+
+                    res.render('userhome', {
+
+                        username: req.user.name,
+                        otherUsers: names,
+
+                    });
+
+                });
+
+           // we are visiting a users profile
+            }else{
+
+                wallpost.getPostInfo(user.name, function(postInfo){
+                
+                   res.render('userprofile', {
+
+                        username: req.user.name,
+                        profileUser : user,
+
+                        postInfo : postInfo
+
+                    });
+
+                });
+
+            }
+
+            
+        }else{
+
+            res.render('usernotfound', {});
+
+        }
+
+    });
+
+});
+app.post(/user(\/.*)?/, function(req, res) {
+
+});
+*/
 
 // start server
 app.listen(openShift.port, openShift.ipaddress, function(){
