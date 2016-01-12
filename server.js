@@ -379,7 +379,13 @@ app.get(/wall(\/.*)?/, function(req, res) {
             } else {
 
                 app.set('layout', 'layout_member');
-                res.render('usernotfound', {});
+                res.render('usernotfound', {
+                    user : req.user,
+                    data : {
+                        time: new Date(),
+                        activePath: req.path
+                    }
+                });
 
             }
 
