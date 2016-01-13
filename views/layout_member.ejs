@@ -63,7 +63,7 @@ body{
 <% include nav %>
 
 <div class="content-container">
-    <p>You are : <%= user.name %> | <a href="/logout">logout</a></p>
+    <p>You are : <%= user.name %> | <a href="/logout">logout</a> | jump to: [ <a href="/wall/<%= user.name %>">your wall</a>, <a href="/users/<%= user.name %>">your profile</a>  ]</p>    
     <%- body %>
 </div>
 
