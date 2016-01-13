@@ -1,14 +1,16 @@
 body{
 
     padding: 0px;
-
+    background: #ffffff;
+    color: #000000; 
 }
 
 .content-container{
+
    margin-top: 60px;
    margin-left: 10px;
    margin-right: 10px;
-
+   
 }
 
 /*  NEW POSTTYPE! delete older stuff */
@@ -33,10 +35,7 @@ body{
 .quickcanvas_content{
 
     display: none;
-
-    width: 640px;
-    margin-left:auto;
-    margin-right:auto;
+    
 }
 
 .quickcanvas_code{
@@ -48,10 +47,7 @@ body{
 
 .quickcanvas_iframe{
     
-    
-    
     outline: 2px solid #0000ff;
-    
     border: 0px;
     width:320px;
     height:240px;
@@ -80,23 +76,19 @@ body{
    
 }
 
-
-
 .quickcanvas_controls{
 
     display:none;
     
-    width: 640px;
-
+ 
     margin-left:auto;
     margin-right:auto;
 }
 
-
 .post_container{
-    background : #000000;
-    color: #ffffff;
+    outline: 1px solid #000000;
     padding: 10px;
+    margin-bottom: 20px;
 }
 
 .posttype_inactive_interface{

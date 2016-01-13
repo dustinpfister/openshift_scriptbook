@@ -221,9 +221,9 @@ postType.add((function(){
             return '<div class=\"quickcanvas_container\">'+
                 '<div class=\"quickcanvas_icon_large\"><img class=\"quickcanvas_image_large\" src=\"'+postContent.thum+'\"><\/div>'+
                 '<div class=\"quickcanvas_icon_small\"><img class=\"quickcanvas_image_small\" src=\"'+postContent.thum+'\"><\/div>'+
-                '<div class=\"quickcanvas_content\">'+
-                    '<textarea class=\"quickcanvas_code\">'+ postContent.code +'<\/textarea>'+
-                    '<iframe class=\"quickcanvas_iframe\" scrolling=\"no\" seamless=\"seamless\" src=\"\/html\/frame_quick_canvas.html\"><\/iframe>'+
+                '<div class=\"quickcanvas_content row\">'+
+                    '<textarea class=\"quickcanvas_code col-md-6\">'+ postContent.code +'<\/textarea>'+
+                    '<iframe class=\"quickcanvas_iframe col-md-6\" scrolling=\"no\" seamless=\"seamless\" src=\"\/html\/frame_quick_canvas.html\"><\/iframe>'+
                 '<\/div>'+
                 '<div class=\"quickcanvas_controls\">'+
                     '<input class=\"quickcanvas_button_runkill\" type=\"button\" value=\"RUN\">'+
