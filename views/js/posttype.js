@@ -156,8 +156,8 @@ var postType = (function(){
             // attach event handler
             setOnAction(post_container);
 
-            post_container.innerHTML = ' <div class=\"post_info\"> var fromUser = \"'+response.postOwner + 
-                '\", at = new Date(\"'+ response.postTime +'\"), postType = \"'+response.postType+'\";<\/div>'+
+            post_container.innerHTML = ' <div class=\"post_info\"> var fromUser = \"<a href=\"/users/'+response.postOwner+'\">'+response.postOwner + 
+                '</a>", at = new Date(\"'+ response.postTime +'\"), postType = \"'+response.postType+'\";<\/div>'+
 
             // rest of content depends on postType
             state.postTypes[response.postType].postTemplate(response.postContent);
