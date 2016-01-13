@@ -445,6 +445,7 @@ app.post(/wall(\/.*)?/, function(req, res) {
 });
 
 // root path get requests
+/*
 app.get('/users', function(req, res) {
 
     app.set('layout', 'layout_member');
@@ -457,18 +458,18 @@ app.get('/users', function(req, res) {
     });
 
 });
+*/
 
 
-/*
 // the user namespace ( /user /user/ /user/username )
-app.get(/user(\/.*)?/, function(req, res) {
+app.get(/users(\/.*)?/, function(req, res) {
 
     var username = req.user.name,
     atHome = true;
 
-    if (req.url.length > 6) {
+    if (req.url.length > 7) {
 
-        username = req.url.replace(/\/user\//, '');
+        username = req.url.replace(/\/users\//, '');
         atHome = false;
     }
 
@@ -481,12 +482,22 @@ app.get(/user(\/.*)?/, function(req, res) {
 
                users.getUserNames(function(names) {
 
-                    res.render('userhome', {
+/*
+                    res.render('users', {
 
                         username: req.user.name,
                         otherUsers: names,
 
                     });
+*/
+                   app.set('layout', 'layout_member');
+                res.render('users', {
+                    user : req.user,
+                    data : {
+                        time: new Date(),
+                        activePath: req.path
+                    }
+                });
 
                 });
 
@@ -494,8 +505,9 @@ app.get(/user(\/.*)?/, function(req, res) {
             }else{
 
                 wallpost.getPostInfo(user.name, function(postInfo){
-                
-                   res.render('userprofile', {
+            
+/*    
+                   res.render('users', {
 
                         username: req.user.name,
                         profileUser : user,
@@ -503,6 +515,16 @@ app.get(/user(\/.*)?/, function(req, res) {
                         postInfo : postInfo
 
                     });
+*/
+                    app.set('layout', 'layout_member');
+                res.render('users', {
+                    user : req.user,
+                    data : {
+                        time: new Date(),
+                        activePath: req.path
+                    }
+                });
+
 
                 });
 
@@ -511,7 +533,15 @@ app.get(/user(\/.*)?/, function(req, res) {
             
         }else{
 
-            res.render('usernotfound', {});
+
+            app.set('layout', 'layout_member');
+                res.render('usernotfound', {
+                    user : req.user,
+                    data : {
+                        time: new Date(),
+                        activePath: req.path
+                    }
+                });
 
         }
 
@@ -521,7 +551,7 @@ app.get(/user(\/.*)?/, function(req, res) {
 app.post(/user(\/.*)?/, function(req, res) {
 
 });
-*/
+
 
 // start server
 app.listen(openShift.port, openShift.ipaddress, function(){
