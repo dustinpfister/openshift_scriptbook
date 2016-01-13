@@ -23,11 +23,11 @@ var postType = (function(){
             var pt = container.dataset.posttype;
 
             container.addEventListener('click', function(e){
-                        
+               
                 var actionObj = state.postTypes[pt].onAction,
                 action = actionObj[String('ifID_'  +e.target.id)] || actionObj[String('ifClass_'  +e.target.className)] ;
 
-                console.log('action');
+                
 
                 // if there is an action for that id, call it
                 if(action){action(e, this, e.target);}
@@ -121,7 +121,11 @@ var postType = (function(){
             // show current posttype interface and hide others
             _.get('posttype_typeselect').addEventListener('click', function(e){
 
-                setActive(e.target.value);
+                if(!(e.target === this)){
+
+                    setActive(e.target.value);
+
+                }
 
             });
 
@@ -131,9 +135,6 @@ var postType = (function(){
 
         injectFromDialHome : function(resStack){
 
-            console.log('injecting response stack from dial home...');
-            console.log(resStack);
-
             var i = resStack.length;
             while(i--){
                 this.injectPost(resStack[i]);
@@ -142,9 +143,6 @@ var postType = (function(){
         },
 
         injectPost : function(response){
-
-            console.log('looking good.');
-            console.log(response);
 
             var post_container = document.createElement('div'),
             parrent = _.get('wall_posts');
