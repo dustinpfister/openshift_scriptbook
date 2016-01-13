@@ -517,12 +517,14 @@ app.get(/users(\/.*)?/, function(req, res) {
                     });
 */
                     app.set('layout', 'layout_member');
-                res.render('users', {
+                res.render('userprofile', {
                     user : req.user,
                     data : {
                         time: new Date(),
                         activePath: req.path
-                    }
+                    },
+                    profileUser : user,
+                    postInfo: postInfo
                 });
 
 
