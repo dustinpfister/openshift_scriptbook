@@ -325,15 +325,6 @@ app.get(/wall(\/.*)?/, function(req, res) {
                             }
 
                             // render
-/*
-                            res.render('userwall', {
-
-                                username: req.user.name,
-                                wallusername: user.name,
-                                inject_wall_posts: html
-
-                            });
-*/
                             app.set('layout', 'layout_member');
                             res.render('wall', {
                                 user : req.user,
@@ -348,14 +339,6 @@ app.get(/wall(\/.*)?/, function(req, res) {
                             });
 
                         } else {
-
-                           /*
-                            res.render('userwall', {
-                                username: req.user.name,
-                                wallusername: user.name,
-                                inject_wall_posts: '<div>why not post something<\/div>'
-                            });
-                            */
 
                             app.set('layout', 'layout_member');
                             res.render('wall', {
@@ -444,23 +427,6 @@ app.post(/wall(\/.*)?/, function(req, res) {
 
 });
 
-// root path get requests
-/*
-app.get('/users', function(req, res) {
-
-    app.set('layout', 'layout_member');
-    res.render('users', {
-        user : req.user,
-        data : {
-            time: new Date(),
-            activePath: req.path
-        }
-    });
-
-});
-*/
-
-
 // the user namespace ( /user /user/ /user/username )
 app.get(/users(\/.*)?/, function(req, res) {
 
@@ -482,14 +448,6 @@ app.get(/users(\/.*)?/, function(req, res) {
 
                users.getUserNames(function(names) {
 
-/*
-                    res.render('users', {
-
-                        username: req.user.name,
-                        otherUsers: names,
-
-                    });
-*/
                    app.set('layout', 'layout_member');
                 res.render('users', {
                     user : req.user,
@@ -505,17 +463,7 @@ app.get(/users(\/.*)?/, function(req, res) {
             }else{
 
                 wallpost.getPostInfo(user.name, function(postInfo){
-            
-/*    
-                   res.render('users', {
-
-                        username: req.user.name,
-                        profileUser : user,
-
-                        postInfo : postInfo
-
-                    });
-*/
+  
                     app.set('layout', 'layout_member');
                 res.render('userprofile', {
                     user : req.user,
@@ -554,10 +502,46 @@ app.post(/user(\/.*)?/, function(req, res) {
 
 });
 
+app.get('/about', function(req,res){
+
+    app.set('layout', 'layout_member');
+                res.render('about', {
+                    user : req.user,
+                    data : {
+                        time: new Date(),
+                        activePath: req.path
+                    }
+    });
+
+});
 
 // start server
 app.listen(openShift.port, openShift.ipaddress, function(){
 
-    console.log('it lives');
+    console.log('scriptbook lives');
+    console.log('updaing version.ejs based on package.json');
+    var fs = require('fs');
+
+    // update version.ejs based on package.json
+    fs.readFile('package.json', 'utf8', function (err,data) {
+
+       var version = '0.0.0';
+
+        if (err) {
+            return console.log(err);
+        }
+
+        version = JSON.parse(data).version;
+        fs.writeFile('views/version.ejs', version, function (err) {
+    
+            if (err) return console.log(err);
+            console.log('version.ejs updated for: ' + version);
+
+        });    
+    
+    });
+
+
+    
 
 });

@@ -1,6 +1,6 @@
 <%
 
-    var paths = ['/', '/wall', '/users'],
+    var paths = ['/', '/wall', '/users', '/about'],
     classNames = [];
 
     paths.forEach(function(path){
@@ -36,6 +36,7 @@
                 <li class="<%= classNames[0] %>" ><a href="/">Home</a></li>
                 <li class="<%= classNames[1] %>" ><a href="/wall">Wall</a></li>
                 <li class="<%= classNames[2] %>"><a href="/users">Users</a></li>
+                <li class="<%= classNames[3] %>"><a href="/about">About</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
