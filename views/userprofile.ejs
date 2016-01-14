@@ -4,10 +4,12 @@
        <li> display name: <span> <%= profileUser.displayName %> </span>  </li>
        <li> id: <span> <%= profileUser.id %> </span>  </li>
        <li>DOB: <%= profileUser.DOB %></li>
-       <li> AGE (in seconds): 
+       <li>AGE (in seconds): 
            <span id="age_start" style="display:none;"><% var str = Math.floor( (new Date() - profileUser.DOB) / 1000 ) %>  <%= str %></span> 
            <span id="age_display"></span>
         </li>
+        <li>sex: <%= profileUser.sex %></li>
+        <li>location: <%= profileUser.location.lat %> , <%= profileUser.location.lon %> </li>
         <li>admin: <%= profileUser.admin %></li>
     </ul>
 
