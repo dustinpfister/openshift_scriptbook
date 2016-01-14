@@ -13,6 +13,53 @@ body{
    
 }
 
+/* login.ejs */
+.login_welcome{
+
+    margin:10px;
+    padding: 10px;
+    border-top: 2px solid #000000;
+    border-right: 2px solid #000000;
+    background: grey;
+    
+    min-height: 200px;
+
+}
+
+.login_welcometo{
+
+    font-family: arial;
+    font-size: 10pt;
+
+}
+
+.login_logo{
+
+   font-family: courier;
+   font-size:20pt;
+   
+}
+
+.login_message{
+
+    font-family: courier;
+    font-size: 8pt;
+    font-style: italic;
+    text-align:left;
+
+}
+
+.login_loginform{
+
+    margin:10px;
+    padding: 10px;
+    border-top: 2px solid #000000;
+    border-left: 2px solid #000000;
+
+}
+
+
+
 /*  NEW POSTTYPE! delete older stuff */
 .quickcanvas_image_large{
 

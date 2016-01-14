@@ -1,20 +1,40 @@
-<p>Welcome to scriptBook</p>
+<div class="row">
 
-<form action="/login" method="post">
+    <div class="col-md-8">
 
-    <div>
-        <label>Username:</label>
-        <input type="text" name="username"/><br/>
+        <div class="login_welcome">
+             <div class="row">
+             <div class="col-md-2"><p class="login_welcometo">Welcome to: </p></div>
+             <div class="col-md-10"><span class="login_logo">&#60;%= scriptBook %&#62; </span></div>
+             
+             </div>
+             <p class="login_message">&#34;Social Media for those that program the web.&#34;</p>
+        </div>
+
     </div>
 
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password"/>
-    </div>
+    <!-- login container -->
+    <div class="col-md-4">
 
-    <div>
-        <input type="submit" value="Submit"/>
-    </div>
+        <div class="login_loginform ">
+            <form action="/login" method="post">
+	        <div>
+	            <label>Username:</label>
+	            <input type="text" name="username"/><br/>
+	        </div>
+	        <div>
+	            <label>Password:</label>
+	            <input type="password" name="password"/>
+	        </div>
+	        <div>
+	            <input type="submit" value="Submit"/>
+	        </div>
+            </form>
+        <div>
 
-</form>
-<a href="/signup">signup</a>
+        <br>
+
+        <a href="/signup">signup</a>
+
+    </div>
+</div>
