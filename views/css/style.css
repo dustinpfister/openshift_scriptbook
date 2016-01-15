@@ -13,6 +13,14 @@ body{
    
 }
 
+/* user path */
+.user_query{
+    padding: 5px;
+    margin-bottom: 10px;
+    border-left: 1px solid #000000;
+    border-top: 1px solid #000000;
+}
+
 /* login.ejs */
 .login_welcome{
 
