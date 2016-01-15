@@ -506,8 +506,8 @@ app.post(/user(\/.*)?/, function(req, res) {
 
         query.forEach(function(user){
             html += '<div class=\"user_query\">'+
-                '<p><span>username: <a href=\"/users/'+user.name+'\">'+user.name+'</a>, </span> <span>sex: '+user.sex+', </span>'+
-                '<span> lat/long: '+user.location.lat+', '+user.location.lon+';</span></p>'+
+                '<p><span>username: <a href=\"/users/'+user.name+'\">'+user.name+'</a>, </span> <span>sex: '+user.sex+'; </span></p>'+
+                '<ul> <li> lat:  '+user.location.lat+'</li> <li>long: '+user.location.lon+'</li> <li> country: '+user.location.country+', state: '+user.location.state+', city: '+user.location.city+' </li> </ul>'+
                 
             '</div>';
         });

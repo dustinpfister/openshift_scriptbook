@@ -1,6 +1,6 @@
 {
   "name": "openshift_scriptbook",
-  "version": "1.8.4",
+  "version": "1.8.5",
   "description": "social media with javascript in mind",
   "main": "server.js",
   "dependencies": {
