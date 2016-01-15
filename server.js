@@ -542,11 +542,14 @@ app.get('/about', function(req,res){
 app.listen(openShift.port, openShift.ipaddress, function(){
 
     console.log('scriptbook lives');
+
+
     console.log('updaing version.ejs based on package.json');
     var fs = require('fs');
 
     // update version.ejs based on package.json
     fs.readFile('package.json', 'utf8', function (err,data) {
+
 
        var version = '0.0.0';
 
@@ -563,8 +566,6 @@ app.listen(openShift.port, openShift.ipaddress, function(){
         });    
     
     });
-
-
-    
+   
 
 });
