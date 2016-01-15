@@ -500,6 +500,27 @@ app.get(/users(\/.*)?/, function(req, res) {
 });
 app.post(/user(\/.*)?/, function(req, res) {
 
+    users.search(req, function(query){
+
+        var html = '';
+
+        query.forEach(function(user){
+            html += '<div>'+
+            '<p><a href=\"/users/'+user.name+'\">'+user.name+'</a></p>'+
+            '</div>';
+        });
+
+        app.set('layout', 'layout_member');
+        res.render('usersearch', {
+            user : req.user,
+            data : {
+                time: new Date(),
+                activePath: req.path
+            },
+            query : html
+        });
+    });
+
 });
 
 app.get('/about', function(req,res){

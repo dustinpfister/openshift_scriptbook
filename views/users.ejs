@@ -1,4 +1,10 @@
 
-<h1>users content</h1>
-<p> <%= data.time %> </p>
+<h1>Find users:</h1>
+<form action="/users" method="post">
+
+    female: <input type="radio" name="sex" value="female" checked> male: <input type="radio" name="sex" value="male"> any: <input type="radio" name="sex" value="any">
+
+   <input type="submit" value="search">
+
+</form>
 
