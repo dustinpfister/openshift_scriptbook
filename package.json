@@ -1,6 +1,6 @@
 {
   "name": "openshift_scriptbook",
-  "version": "1.8.6",
+  "version": "1.9.0",
   "description": "social media with javascript in mind",
   "main": "server.js",
   "dependencies": {
@@ -12,7 +12,8 @@
     "cookie-parser": "^1.4.0",
     "express-session": "^1.12.1",
     "passport": "^0.3.2",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "connect-mongo": "^1.1.0"
   },
   "devDependencies": {},
   "scripts": {

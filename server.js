@@ -7,8 +7,15 @@
  */
 
 var express = require('express'),
+session = require('express-session'),
+//MongoStore = require('connect-mongo')(session),
+MongoStore = require('connect-mongo/es5')(session)
 openShift = require('./lib/openshift.js').openShiftObj,
 expressLayouts = require('express-ejs-layouts'),
+
+console.log('**********');
+console.log(openShift.mongo);
+console.log('**********');
 
 // passport
 passport = require('passport'),
@@ -67,14 +74,18 @@ passport.deserializeUser(function(id, cb) {
 
 
 
+
 // Use application-level middleware for common functionality, including logging, parsing, and session handling.
 app.use(require('cookie-parser')());
 app.use(require('body-parser').json({limit: '5mb'}));
 app.use(require('body-parser').urlencoded({extended: true,limit: '5mb'}));
 // ALERT! check out: npmjs.com/package/express-session
-app.use(require('express-session')({
+app.use( session({
     secret: 'keyboard cat', // ALERT! look into express-session and why the secret is important
     resave: false,
+    store: new MongoStore({
+        url: openShift.mongo
+    }),
     saveUninitialized: false,
     limit: '5mb'
 }));
