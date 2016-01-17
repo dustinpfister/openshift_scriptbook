@@ -8,14 +8,9 @@
 
 var express = require('express'),
 session = require('express-session'),
-//MongoStore = require('connect-mongo')(session),
 MongoStore = require('connect-mongo/es5')(session)
 openShift = require('./lib/openshift.js').openShiftObj,
 expressLayouts = require('express-ejs-layouts'),
-
-console.log('**********');
-console.log(openShift.mongo);
-console.log('**********');
 
 // passport
 passport = require('passport'),
@@ -554,29 +549,8 @@ app.listen(openShift.port, openShift.ipaddress, function(){
 
     console.log('scriptbook lives');
 
-
-    console.log('updaing version.ejs based on package.json');
-    var fs = require('fs');
-
-    // update version.ejs based on package.json
-    fs.readFile('package.json', 'utf8', function (err,data) {
-
-
-       var version = '0.0.0';
-
-        if (err) {
-            return console.log(err);
-        }
-
-        version = JSON.parse(data).version;
-        fs.writeFile('views/version.ejs', version, function (err) {
-    
-            if (err) return console.log(err);
-            console.log('version.ejs updated for: ' + version);
-
-        });    
-    
-    });
+    // call on start
+    require('./lib/onstart.js').onStart();
    
 
 });
