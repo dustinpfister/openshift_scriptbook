@@ -550,7 +550,7 @@ app.listen(openShift.port, openShift.ipaddress, function(){
     console.log('scriptbook lives');
 
     // call on start
-    require('./lib/onstart.js').onStart();
+    require('./lib/onstart.js').onStart(users);
    
 
 });
