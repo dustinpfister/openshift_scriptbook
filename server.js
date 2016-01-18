@@ -544,13 +544,45 @@ app.get('/about', function(req,res){
 
 });
 
-// start server
-app.listen(openShift.port, openShift.ipaddress, function(){
+var onStart = require('./lib/onstart.js');
 
-    console.log('scriptbook lives');
+// mongoDB check...
+onStart.mongoCheck(
 
-    // call on start
-    require('./lib/onstart.js').onStart(users);
+    // if mongodb check is good, start the app :-)
+    function(){
+
+        // start the server
+        app.listen(openShift.port, openShift.ipaddress, function(){
+
+            console.log('scriptbook lives');
+
+            // call on start
+            onStart.onStart(users);
    
+        });
 
-});
+    },
+
+    // if mongo check is bad run error app :-(
+    function(){
+
+        var errApp = express();
+
+        console.log('looks like we do not have mongodb, launching static site');
+        
+        errApp.get('*', function(req,res){
+
+            res.send('looks like mongoDB is not installed');
+
+        });
+
+        errApp.listen(openShift.port, openShift.ipaddress, function(){
+
+            console.log('err app running.');
+
+        });
+
+    }
+
+);
