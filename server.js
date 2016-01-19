@@ -20,8 +20,13 @@ Strategy = require('passport-local').Strategy,
 users = require('./lib/users.js'),
 wallpost = require('./lib/wallpost.js'),
 
+// markdown
+marked = require('marked'),
+
 // express app
 app = express();
+
+console.log(marked('I am using __markdown__.'));
 
 // use passport local strategy
 // following example at : https://github.com/passport/express-4.x-local-example/blob/master/server.js
@@ -304,7 +309,7 @@ app.get(/wall(\/.*)?/, function(req, res) {
                                 // say post
                                 if (wallposts[i].postType === 'say') {
 
-                                    html += '<div class="post_say"><p>' + wallposts[i].postContent + '<\/p><\/div>';
+                                    html += '<div class="post_say"><p>' + marked(wallposts[i].postContent) + '<\/p><\/div>';
 
                                 }
 
