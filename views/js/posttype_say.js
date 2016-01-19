@@ -1,30 +1,43 @@
+/*
+ *    posttype_say.js
+ *    Copyright 2015-2016 by Dustin Pfister ( GPL-3.0 )
+ *
+ *    A posttype.js plugin intened for use at scriptBook
+ *
+ */
+
+
 postType.add((function(){
 
+    // return the posttype object
     return {
 
         postType: 'say',
-        marked: true,
+        marked: true,        // this posttypes content is subject to markdown formatting
+
+        // user interface for creating a "say"
         ui: function(){
 
             return  '<label>Say:</label>'+
-                '<input id="say_input" type="text">'+
+                '<textarea id="say_input" ></textarea>'+
                 '<input id="say_post" type="submit" value="post">';
 
         },
+
+        // onAction methods
         onAction : {
 
+            // the container
             ifClass_post_container : function(){
 
-                console.log('so this is where you could do somthing for when the post container is clicked');
-
             },
 
+            // input
             ifID_say_input: function(){
 
-                console.log('input!')
-
             },
 
+            // post button
             ifID_say_post: function(){
          
                 var saying = _.get('say_input').value;
@@ -45,18 +58,14 @@ postType.add((function(){
 
                     postType.injectPost
 
-                    /*
-                    function(response){
-                        console.log('looks like it worked, not we just need to inject');
-                        console.log(response);
-                    }
-                    */
                 );
                 
 
             }
 
         },
+
+        // template for generating a says html
         postTemplate: function(postContent){ return '<div class="post_say"><p>' + postContent + '<\/p><\/div>';}
     }
 }()));

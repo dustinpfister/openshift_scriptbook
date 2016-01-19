@@ -1,9 +1,30 @@
+/*
+ *    scriptBook style.css
+ *    Copyright 2015-2016 by Dutsin Pfister (GPL-3.0)
+ *    
+ */
+
 body{
 
     padding: 0px;
     background: #ffffff;
     color: #000000; 
 }
+
+/*     ALERT!
+ *
+ *    I am defining rules for img useing the img selector.
+ *    These rules are for images that are generated in posts via markdown.
+ *    all other images SHOULD have there own rules that are attahed via id or class.
+ *    if i get to it i may do this some other way, but for now this is how i am rolling.
+ *
+ */
+img{
+
+    width: 300px; 
+
+}
+
 
 .content-container{
 
@@ -67,7 +88,7 @@ body{
 }
 
 
-
+/* wall path */
 /*  NEW POSTTYPE! delete older stuff */
 .quickcanvas_image_large{
 
@@ -155,5 +176,13 @@ body{
 .posttype_active_interface{
 
     display:block;
+
+}
+
+/* say posttype */
+#say_input{
+
+    width:240px;
+    height:180px;
 
 }
