@@ -251,12 +251,26 @@ app.get('/logout', function(req, res) {
 app.get('/', function(req, res) {
 
     app.set('layout', 'layout_member');
-    res.render('root', {
-        user : req.user,
-        data : {
-            time: new Date(),
-            activePath: req.path
+    
+    wallpost.getLatestPost(req.user.name, function(post){
+
+        if(post.postType === 'say'){
+              post.postContent = marked(post.postContent);
         }
+
+        if(post.postType === 'quickcanvas'){
+              post.postContent = '<img src=\"'+post.postContent.thum+'\">';
+        }
+
+        res.render('root', {
+            user : req.user,
+            lastPost: post.postContent,
+            data : {
+                time: new Date(),
+                activePath: req.path
+            }
+        });
+
     });
 
 });
