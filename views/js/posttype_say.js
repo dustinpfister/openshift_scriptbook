@@ -3,7 +3,7 @@ postType.add((function(){
     return {
 
         postType: 'say',
-
+        marked: true,
         ui: function(){
 
             return  '<label>Say:</label>'+

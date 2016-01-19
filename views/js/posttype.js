@@ -3,6 +3,11 @@
 
     posttype.js is a scriptbook front-end for handeling the posting, and injecting of wall posts on the client system.
 
+    depends:
+
+        * marked_min.js
+        * posttype_say.js , posttype_quickcanvas.js ( and any additional plug-ins )
+
 */
 
 var postType = (function(){
@@ -158,8 +163,17 @@ var postType = (function(){
                 '</a>", at = new Date(\"'+ response.postTime +'\"), postType = \"'+response.postType+'\";<\/div>'+
 
             // rest of content depends on postType
-            state.postTypes[response.postType].postTemplate(response.postContent);
-                                
+           (function(){
+                
+                var pt = state.postTypes[response.postType],
+                
+                // mark content
+                content = pt.marked ? marked(response.postContent) : response.postContent;
+
+                return pt.postTemplate( content );
+
+            }());                  
+
             if(parrent.children.length > 0){
                 parrent.insertBefore(post_container, parrent.children[0]);
             }
