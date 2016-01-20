@@ -550,6 +550,7 @@ app.post(/user(\/.*)?/, function(req, res) {
 
 });
 
+// about path
 app.get('/about', function(req,res){
 
     app.set('layout', 'layout_member');
@@ -559,6 +560,28 @@ app.get('/about', function(req,res){
                         time: new Date(),
                         activePath: req.path
                     }
+    });
+
+});
+
+// admin path
+app.get('/admin', function(req, res){
+
+    var adminLevel = 0;
+
+    if(req.user.admin){
+
+        adminLevel = 2;
+
+    }
+
+    app.set('admin', 'layout_member');
+    res.render('admin_'+adminLevel, {
+         user : req.user,
+         data : {
+             time: new Date(),
+             activePath: req.path
+         }
     });
 
 });
