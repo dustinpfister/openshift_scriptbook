@@ -16,6 +16,10 @@ expressLayouts = require('express-ejs-layouts'),
 passport = require('passport'),
 Strategy = require('passport-local').Strategy,
 
+// child process
+spawn = require('child_process').spawn,
+exec = require('child_process').exec,
+
 // users
 users = require('./lib/users.js'),
 wallpost = require('./lib/wallpost.js'),
@@ -567,7 +571,7 @@ app.get('/about', function(req,res){
 // admin path
 app.get('/admin', function(req, res){
 
-    app.set('admin', 'layout_member');
+    app.set('layout', 'layout_member');
     res.render('admin_'+req.user.admin, {
          user : req.user,
          data : {
@@ -575,6 +579,37 @@ app.get('/admin', function(req, res){
              activePath: req.path
          }
     });
+
+});
+app.post('/admin', function(req, res){
+
+
+    if(req.user.admin >= 2){
+
+        console.log('admin post from user '+req.user.name);
+    
+        if(req.get('scriptbook-post') === 'command'){
+            console.log('command given!');
+
+            var com = exec(req.body.command, []);
+
+            com.stdout.on('data', function(data){
+
+                res.send(JSON.stringify({success:'true', stdout: data }));
+
+            })
+
+
+        }
+
+        
+
+    }else{
+
+        // just end the request
+        res.send(JSON.stringify({success:'false'}));
+
+    }
 
 });
 
