@@ -567,16 +567,8 @@ app.get('/about', function(req,res){
 // admin path
 app.get('/admin', function(req, res){
 
-    var adminLevel = 0;
-
-    if(req.user.admin){
-
-        adminLevel = 2;
-
-    }
-
     app.set('admin', 'layout_member');
-    res.render('admin_'+adminLevel, {
+    res.render('admin_'+req.user.admin, {
          user : req.user,
          data : {
              time: new Date(),
