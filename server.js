@@ -221,8 +221,6 @@ app.post('/login',
 
 app.get('/signup', function(req,res,next){
 
-    console.log('hello???');
-
     app.set('layout', 'layout_visit');
     res.render('signup', {
         data : {
