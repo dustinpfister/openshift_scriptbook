@@ -1,9 +1,12 @@
 #!/bin/env node
 
-/*    OpenShift_demo by Dustin Pfister
- *    https://github.com/dustinpfister/openshift_demo
+/*    OpenShift_scriptbook
+ *    Copyright 2015-2016 by Dustin Pfister (GPL-3.0)
+ *    dustin.pfister@gamil.com
+ *    
+ *    https://github.com/dustinpfister/openshift_scriptbook
  *
- *    A simple openshift.com demo app using express, and mongoose.
+ *    Social media for people who love javascript
  */
 
 var express = require('express'),
@@ -28,14 +31,23 @@ wallpost = require('./lib/wallpost.js'),
 marked = require('marked'),
 
 // express app
-app = express();
+app = express(),
 
-console.log(marked('I am using __markdown__.'));
+// mongoDB
+mongoose = require('mongoose'),
+db = mongoose.createConnection(openShift.mongo),
+Schema = mongoose.Schema,
+
+// mongo example
+IPLOGGER = db.model('client', new Schema({
+
+    ip: String,
+    count: Number
+
+}));
 
 // use passport local strategy
 // following example at : https://github.com/passport/express-4.x-local-example/blob/master/server.js
-
-
 passport.use(new Strategy(
 
     function(username, password, cb) {
@@ -76,14 +88,10 @@ passport.deserializeUser(function(id, cb) {
 
 });
 
-
-
-
 // Use application-level middleware for common functionality, including logging, parsing, and session handling.
 app.use(require('cookie-parser')());
 app.use(require('body-parser').json({limit: '5mb'}));
 app.use(require('body-parser').urlencoded({extended: true,limit: '5mb'}));
-// ALERT! check out: npmjs.com/package/express-session
 app.use( session({
     secret: 'keyboard cat', // ALERT! look into express-session and why the secret is important
     resave: false,
@@ -96,18 +104,6 @@ app.use( session({
 app.use(passport.initialize());  // Initialize Passport and restore authentication state, if any, from the session
 app.use(passport.session());
 
-// mongoDB
-var mongoose = require('mongoose'),
-db = mongoose.createConnection(openShift.mongo),
-Schema = mongoose.Schema,
-
-// mongo example
-IPLOGGER = db.model('client', new Schema({
-
-    ip: String,
-    count: Number
-
-}));
 
 // app.use
 
@@ -550,6 +546,38 @@ app.post(/user(\/.*)?/, function(req, res) {
             },
             query : html
         });
+    });
+
+});
+
+// settings path
+app.get('/settings', function(req,res){
+
+    app.set('layout', 'layout_member');
+        res.render('settings', {
+            user : req.user,
+            data : {
+                time: new Date(),
+                activePath: req.path
+            }
+    });
+
+});
+app.post('/settings', function(req,res){
+
+    
+    users.update(req, 'password', function(status){
+        
+        app.set('layout', 'layout_member');
+        res.render('settingsupdate', {
+            user : req.user,
+            data : {
+                time: new Date(),
+                activePath: req.path
+            },
+            status : status
+        });
+
     });
 
 });

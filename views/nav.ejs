@@ -1,6 +1,6 @@
 <%
 
-    var paths = ['/', '/wall', '/users', '/about'],
+    var paths = ['/', '/wall', '/users', '/settings', '/about'],
     //adminNav = '<li><a href="/admin">Admin</a></li>',
     adminNav = '',
     classNames = [];
@@ -44,7 +44,8 @@
                 <li class="<%= classNames[0] %>" ><a href="/">Home</a></li>
                 <li class="<%= classNames[1] %>" ><a href="/wall">Wall</a></li>
                 <li class="<%= classNames[2] %>"><a href="/users">Users</a></li>
-                <li class="<%= classNames[3] %>"><a href="/about">About</a></li>
+                <li class="<%= classNames[3] %>"><a href="/settings">Settings</a></li>
+                <li class="<%= classNames[4] %>"><a href="/about">About</a></li>
                 <%- adminNav %>
             </ul>
         </div><!--/.nav-collapse -->
