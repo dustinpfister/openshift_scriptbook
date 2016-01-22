@@ -27,6 +27,9 @@ exec = require('child_process').exec,
 users = require('./lib/users.js'),
 wallpost = require('./lib/wallpost.js'),
 
+//messbox
+messBox = require('./lib/mess.js'),
+
 // markdown
 marked = require('marked'),
 
@@ -260,14 +263,17 @@ app.get('/', function(req, res) {
               post.postContent = '<img src=\"'+post.postContent.thum+'\">';
         }
 
+        //messBox.getInfo(req.user.name, function(messInfo){
         res.render('root', {
             user : req.user,
             lastPost: post.postContent,
             data : {
                 time: new Date(),
                 activePath: req.path
+          //      messageInfo : messInfo
             }
         });
+        //});
 
     });
 
@@ -639,8 +645,31 @@ app.post('/admin', function(req, res){
 
 });
 
-var onStart = require('./lib/onstart.js');
+app.get('/messbox', function(req,res){
 
+    messBox.getInbox(req.user.name, 0, 5, function(messages){
+    
+    app.set('layout', 'layout_member');
+    res.render('messbox', {
+         user : req.user,
+         data : {
+             time: new Date(),
+             activePath: req.path
+         },
+         messages : messages
+    });
+
+    });
+
+
+});
+app.post('/messbox', function(res,req){
+
+
+});
+
+
+var onStart = require('./lib/onstart.js');
 // mongoDB check...
 onStart.mongoCheck(
 

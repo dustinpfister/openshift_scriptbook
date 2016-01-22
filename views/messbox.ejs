@@ -1,0 +1,21 @@
+
+<div id="messbox_inbox">
+
+    <%
+
+        var mess = messages.inbox,
+        messHTML = '';
+
+        mess.forEach(function(m){
+            messHTML = '<div class="messbox_mess">'+
+                '<p>from : <a href=\"/users/'+m.fromUser+'\">'+m.fromUser+'<\/a></p>'+
+                '<p>'+m.content+'</p>'+
+            '<\/div>';
+        })
+
+    %>
+
+
+    <%- messHTML  %>
+
+</div>
