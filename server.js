@@ -186,7 +186,11 @@ function(req, res, next) {
 
 );
 
+app.post('*', function(req,res,next){
 
+    require('./lib/allposts.js').all(req,res, next);
+
+});
 
 // login
 app.get('/login', function(req, res){
@@ -265,17 +269,14 @@ app.get('/', function(req, res) {
               post.postContent = '<img src=\"'+post.postContent.thum+'\">';
         }
 
-        //messBox.getInfo(req.user.name, function(messInfo){
         res.render('root', {
             user : req.user,
             lastPost: post.postContent,
             data : {
                 time: new Date(),
-                activePath: req.path,
-                //messInfo : messInfo
+                activePath: req.path
             }
         });
-        //});
 
     });
 

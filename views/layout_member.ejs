@@ -63,33 +63,30 @@ body{
 <% include nav %>
 
 <div class="content-container">
-    <p>var YouAre = [ <a href="/users/<%= user.name %>"><%= user.name %> </a>,
+    <p>
+         var YouAre = [ <a href="/users/<%= user.name %>"><%= user.name %> </a>,
          <a href="/logout">logout</a> ,
-
-         <%
-
-            var messHTML = '<a href=\"/messbox\">messages</a> ];';
-
-            if(data.messInfo){
-            
-                if(data.messInfo > 0){
-
-                    messHTML = '<a href=\"/messbox\"> new messages! : '+ data.messInfo+'</a> ];';
-
-                }
-
-            }
-
-         %> 
-
-        <%- messHTML %>
-
-         <!--<a href="/messbox">new messages! : <%= data.messInfo %></a> |-->
-
-        <!-- jump to: [ <a href="/wall/<%= user.name %>">your wall</a>, <a href="/users/<%= user.name %>">your profile</a>  ]-->
-    </p>
+         <a id="messagelink" href="/messbox">messages</a> ];
+     </p>
     
     <%- body %>
+
+    <% include foot %>
+
+    <script src="js/allhttp.js"></script>
+<script>
+
+    allhttp.sendSiteWide('<%= data.activePath %>', {one: 'yes'}, function(info){
+        
+        console.log(info);
+
+        document.getElementById('messagelink').innerHTML= 'newMessages('+info.newMessCount+')';
+
+
+    });
+
+</script>
+
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
