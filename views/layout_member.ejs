@@ -63,7 +63,32 @@ body{
 <% include nav %>
 
 <div class="content-container">
-    <p>You are : <%= user.name %> | <a href="/logout">logout</a> | jump to: [ <a href="/wall/<%= user.name %>">your wall</a>, <a href="/users/<%= user.name %>">your profile</a>  ]</p>    
+    <p>var YouAre = [ <a href="/users/<%= user.name %>"><%= user.name %> </a>,
+         <a href="/logout">logout</a> ,
+
+         <%
+
+            var messHTML = '<a href=\"/messbox\">messages</a> ];';
+
+            if(data.messInfo){
+            
+                if(data.messInfo > 0){
+
+                    messHTML = '<a href=\"/messbox\"> new messages! : '+ data.messInfo+'</a> ];';
+
+                }
+
+            }
+
+         %> 
+
+        <%- messHTML %>
+
+         <!--<a href="/messbox">new messages! : <%= data.messInfo %></a> |-->
+
+        <!-- jump to: [ <a href="/wall/<%= user.name %>">your wall</a>, <a href="/users/<%= user.name %>">your profile</a>  ]-->
+    </p>
+    
     <%- body %>
 </div>
 

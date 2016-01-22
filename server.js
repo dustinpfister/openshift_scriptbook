@@ -186,6 +186,8 @@ function(req, res, next) {
 
 );
 
+
+
 // login
 app.get('/login', function(req, res){
 
@@ -269,8 +271,8 @@ app.get('/', function(req, res) {
             lastPost: post.postContent,
             data : {
                 time: new Date(),
-                activePath: req.path
-          //      messageInfo : messInfo
+                activePath: req.path,
+                //messInfo : messInfo
             }
         });
         //});
