@@ -25,7 +25,6 @@ scriptbook 3.x    -    add just a few new features that will help make scriptboo
 * admin lv 1 of higher should be able to view browser share
 * admin lv 2 or higher should be able to view whos logged in (view state of session database made my connect-mongo)
 
-
 * SSL
 
 ## upcoming additons for 1.x :

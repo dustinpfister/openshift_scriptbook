@@ -666,8 +666,25 @@ app.get('/messbox', function(req,res){
 
 
 });
-app.post('/messbox', function(res,req){
+app.post('/messbox', function(req, res){
 
+    console.log('well here it is...');
+    console.log(req.body);
+
+    
+    messBox.sendMess(req.user.name, req.body.touser, req.body.content, function(status){
+
+        app.set('layout', 'layout_member');
+        res.render('messbox_sent', {
+             user : req.user,
+             data : {
+                 time: new Date(),
+                 activePath: req.path
+             },
+             status : status
+    });
+
+    });
 
 });
 
