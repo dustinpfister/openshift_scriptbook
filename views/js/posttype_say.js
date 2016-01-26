@@ -60,12 +60,12 @@ postType.add((function(){
 
                 );
                 
-
             }
 
         },
 
         // template for generating a says html
-        postTemplate: function(postContent){ return '<div class="post_say"><p>' + postContent + '<\/p><\/div>';}
+        postTemplate: function(postContent){ return '<div class="post_say"><p>' + postContent + '<\/p><\/div>'; }
     }
+
 }()));

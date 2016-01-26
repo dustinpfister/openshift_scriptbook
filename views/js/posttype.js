@@ -73,7 +73,6 @@ var postType = (function(){
         addJSON : function(aurgObj){
 
             state.json.push(aurgObj);
-            console.log(state.json);
 
         },
 
@@ -110,8 +109,6 @@ var postType = (function(){
                 '<\/div>';
 
             }
-
-            //html += '<\/div>';
 
             // inject interface into container
             container.innerHTML = html;

@@ -306,6 +306,7 @@ app.get(/wall(\/.*)?/, function(req, res) {
                 // find the users profile
                 users.findProfile(username, function(err, user) {
 
+                    // ALERT! call wallposts something other then wallposts to stop confusion with wallpost
                     // do they have posts?
                     wallpost.getPosts(req, user.name, function(wallposts) {
 
@@ -323,34 +324,12 @@ app.get(/wall(\/.*)?/, function(req, res) {
 
                                 // html context that will be in all posts
                                 html += '<div data-posttype=\"' + wallposts[i].postType + '\" id=\"post_container_' + wallposts[i]._id + '\" class=\"post_container\">' +
-                                    //' <div class=\"post_info\">'+wallposts[i].postOwner+'<\/div>'
-                                    ' <div class=\"post_info\"> var fromUser = \"<a href="/users/'+wallposts[i].postOwner+'">' + wallposts[i].postOwner + '</a>\", at = new Date(\"' + wallposts[i].postTime + '\")' +
+                                    ' <div class=\"post_info\"> var fromUser = \"<a href="/users/'+wallposts[i].postOwner+'">' + 
+                                    wallposts[i].postOwner + '</a>\", at = new Date(\"' + wallposts[i].postTime + '\")' +
                                     ', postType = \"' + wallposts[i].postType + '\";<\/div>';
 
-                                // say post
-                                if (wallposts[i].postType === 'say') {
-
-                                    html += '<div class="post_say"><p>' + marked(wallposts[i].postContent) + '<\/p><\/div>';
-
-                                }
-
-                                // quick canvas post
-                                if (wallposts[i].postType === 'quickcanvas') {
-
-                                    html += '<div class=\"quickcanvas_container\">' +
-                                        '<div class=\"quickcanvas_icon_large\"><img class=\"quickcanvas_image_large\" src=\"' + wallposts[i].postContent.thum + '\"><\/div>' +
-                                        '<div class=\"quickcanvas_icon_small\"><img class=\"quickcanvas_image_small\" src=\"' + wallposts[i].postContent.thum + '\"><\/div>' +
-                                        '<div class=\"quickcanvas_content row\">' +
-                                            '<textarea class=\"quickcanvas_code col-md-6\">' + wallposts[i].postContent.code + '<\/textarea>' +
-                                            '<iframe class=\"quickcanvas_iframe col-md-6\" scrolling=\"no\" seamless=\"seamless\" src=\"\/html\/frame_quick_canvas.html\"><\/iframe>' +
-                                        '<\/div>' +
-                                        '<div class=\"quickcanvas_controls\">' +
-                                        '<input class=\"quickcanvas_button_runkill\" type=\"button\" value=\"RUN\">' +
-                                        '<input class=\"quickcanvas_button_hide\" type=\"button\" value=\"hide\">' +
-                                        '<\/div>' +
-                                        '<\/div>';
-
-                                }
+                                    // inject html using the template for the wallpost's posttype
+                                    html += wallpost.templates[ wallposts[i].postType ]( wallposts[i].postContent );
 
                                 // end post container
                                 html += '<\/div><!-- end post -->';
