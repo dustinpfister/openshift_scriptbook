@@ -1,6 +1,6 @@
 #!/bin/env node
 
-/*    server.js for "openShift_scriptbook"
+/*    OpenShift_scriptbook
  *    Copyright 2015-2016 by Dustin Pfister (GPL-3.0)
  *    dustin.pfister@gamil.com
  *    
@@ -25,9 +25,14 @@ exec = require('child_process').exec,
 
 // users
 users = require('./lib/users.js'),
-posttype_templates = require('./lib/posttype_templates.js'),
 wallpost = require('./lib/wallpost.js'),
+posttype_templates = require('./lib/posttype_templates.js'),
+
+//messbox
 messBox = require('./lib/mess.js'),
+
+// markdown
+//marked = require('marked'),
 
 // express app
 app = express(),
@@ -257,8 +262,19 @@ app.get('/', function(req, res) {
     
     wallpost.getLatestPost(req.user.name, function(post){
 
+/*
+        if(post.postType === 'say'){
+              post.postContent = marked(post.postContent);
+        }
+
+        if(post.postType === 'quickcanvas'){
+              post.postContent = '<img src=\"'+post.postContent.thum+'\">';
+        }
+*/
+
         res.render('root', {
             user : req.user,
+            //lastPost: post.postContent,
             lastPost: posttype_templates.templates[post.postType](post.postContent),
             data : {
                 time: new Date(),
@@ -317,6 +333,7 @@ app.get(/wall(\/.*)?/, function(req, res) {
                                     ', postType = \"' + wallposts[i].postType + '\";<\/div>';
 
                                     // inject html using the template for the wallpost's posttype
+                                    // html += wallpost.templates[ wallposts[i].postType ]( wallposts[i].postContent );
                                     html += posttype_templates.templates[ wallposts[i].postType ]( wallposts[i].postContent );
 
                                 // end post container
