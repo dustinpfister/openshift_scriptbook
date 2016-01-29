@@ -1,4 +1,3 @@
-
 var allhttp = (function(){
 
     // post to server

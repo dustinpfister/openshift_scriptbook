@@ -64,7 +64,7 @@ body{
 
 <div class="content-container">
     <p>
-         var YouAre = [ <a href="/users/<%= user.name %>"><%= user.name %> </a>,
+         var YouAre = [ <a id="username" href="/users/<%= user.name %>"><%= user.name %></a>,
          <a href="/logout">logout</a> ,
          <a id="messagelink" href="/messbox">messages</a> ];
      </p>
@@ -73,7 +73,8 @@ body{
 
     <% include foot %>
 
-    <script src="js/allhttp.js"></script>
+    <script src="/js/allhttp.js"></script>
+
 <script>
 
     allhttp.sendSiteWide('<%= data.activePath %>', {one: 'yes'}, function(info){
@@ -86,6 +87,7 @@ body{
     });
 
 </script>
+
 
 </div>
 

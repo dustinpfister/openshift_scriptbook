@@ -32,14 +32,19 @@ var postType = (function(){
                 var actionObj = state.postTypes[pt].onAction,
                 action = actionObj[String('ifID_'  +e.target.id)] || actionObj[String('ifClass_'  +e.target.className)] ;
 
-                
-
                 // if there is an action for that id, call it
                 if(action){action(e, this, e.target);}
 
             });
 
         }());
+
+        // call the posttypes autorun if it has one
+        if(state.postTypes[container.dataset.posttype].autoRun){
+
+            state.postTypes[container.dataset.posttype].autoRun(container);
+
+        }
 
     },
 
@@ -97,9 +102,11 @@ var postType = (function(){
 
         injectInterface: function(container){
 
+            // ALERT! no this should be generated based on state.posttypes not hardcoded
             var html = '<div id="posttype_typeselect">'+
                 '<input name="posttype_select" id="posttype_radio_say" value="say" type="radio" checked><span>Say</span>'+
-                '<input name="posttype_select" id="posttype_radio_quickcanvas" value="quickcanvas" type="radio"><span>Quick Canvas</span><\/div>';
+                '<input name="posttype_select" id="posttype_radio_quickcanvas" value="quickcanvas" type="radio"><span>Quick Canvas</span>'+
+                '<input name="posttype_select" id="posttype_radio_tictactoe" value="tictactoe" type="radio"><span>Tic Tac Toe</span><\/div>';
 
             // comple interface
             for(var postType in state.postTypes){

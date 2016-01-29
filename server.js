@@ -31,9 +31,6 @@ posttype_templates = require('./lib/posttype_templates.js'),
 //messbox
 messBox = require('./lib/mess.js'),
 
-// markdown
-//marked = require('marked'),
-
 // express app
 app = express(),
 
@@ -107,9 +104,6 @@ app.use( session({
 }));
 app.use(passport.initialize());  // Initialize Passport and restore authentication state, if any, from the session
 app.use(passport.session());
-
-
-// app.use
 
 // use EJS for rendering
 app.set( 'view engine', 'ejs' );
@@ -207,6 +201,7 @@ app.get('/login', function(req, res){
     });
 
 });
+
 // login post
 app.post('/login',
     // pre login
@@ -262,20 +257,10 @@ app.get('/', function(req, res) {
     
     wallpost.getLatestPost(req.user.name, function(post){
 
-/*
-        if(post.postType === 'say'){
-              post.postContent = marked(post.postContent);
-        }
-
-        if(post.postType === 'quickcanvas'){
-              post.postContent = '<img src=\"'+post.postContent.thum+'\">';
-        }
-*/
-
         res.render('root', {
             user : req.user,
-            //lastPost: post.postContent,
-            lastPost: posttype_templates.templates[post.postType](post.postContent),
+           // lastPost : posttype_templates.templates[post.postType](post.postContent),
+            lastPost: !post.postType ? 'why not post something? ' : posttype_templates.templates[post.postType](post.postContent),
             data : {
                 time: new Date(),
                 activePath: req.path
@@ -327,13 +312,12 @@ app.get(/wall(\/.*)?/, function(req, res) {
                             while (i--) {
 
                                 // html context that will be in all posts
-                                html += '<div data-posttype=\"' + wallposts[i].postType + '\" id=\"post_container_' + wallposts[i]._id + '\" class=\"post_container\">' +
+                                html += '<div data-postowner =\"'+ wallposts[i].postOwner +'\" data-posttype=\"' + wallposts[i].postType + '\" id=\"post_container_' + wallposts[i]._id + '\" class=\"post_container\">' +
                                     ' <div class=\"post_info\"> var fromUser = \"<a href="/users/'+wallposts[i].postOwner+'">' + 
                                     wallposts[i].postOwner + '</a>\", at = new Date(\"' + wallposts[i].postTime + '\")' +
                                     ', postType = \"' + wallposts[i].postType + '\";<\/div>';
 
                                     // inject html using the template for the wallpost's posttype
-                                    // html += wallpost.templates[ wallposts[i].postType ]( wallposts[i].postContent );
                                     html += posttype_templates.templates[ wallposts[i].postType ]( wallposts[i].postContent );
 
                                 // end post container
@@ -395,9 +379,6 @@ app.get(/wall(\/.*)?/, function(req, res) {
 });
 app.post(/wall(\/.*)?/, function(req, res) {
 
-    console.log('post from /wall');
-    console.log(req.get('scriptbook-post'));
-
     // if wall post
     if (req.get('scriptbook-post') === 'wallpost') {
 
@@ -423,8 +404,6 @@ app.post(/wall(\/.*)?/, function(req, res) {
         //if(req.get('postcheck')){
         if (req.get('scriptbook-post') === 'postcheck') {
 
-            // res.send(JSON.stringify({postcheck: 'sure i will get on that.'}));
-            //res.send(req.get('postcheck'));
             wallpost.postCheck(req, function(post) {
 
                 res.send(JSON.stringify(post));
