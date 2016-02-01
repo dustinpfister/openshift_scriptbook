@@ -69,8 +69,7 @@ body{
          <a id="messagelink" href="/messbox">messages</a> ];
      </p>
 
-   <script src="/js/http.js" ></script>
-
+   <script src="/js/sb_client_api.js"></script>
     
     <%- body %>
 
@@ -79,14 +78,16 @@ body{
 
 <script>
 
-    _http.sendSiteWide('<%= data.activePath %>', {one: 'yes'}, function(info){
-        
+    // site wide dial home
+    _.send('<%= data.activePath %>', 'site_wide_dial_home', {one: 'yes'}, function(info){  
+
+        console.log('i am site wide dial home, i need work.');
         console.log(info);
 
         document.getElementById('messagelink').innerHTML= 'newMessages('+info.newMessCount+')';
 
-
     });
+
 
 </script>
 

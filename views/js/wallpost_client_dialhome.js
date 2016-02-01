@@ -12,28 +12,25 @@
         latestID =  posts.children[0].id.replace(/post_container_/,''),
         oldestID = posts.children[posts.children.length-1].id.replace(/post_container_/,'');
     
-        _http.sendPostCheck(
+        _.send(
+            '/wall',
+            'postcheck',
             {
                 checkType: 'newposts',
                 forUser: _.get('wall_username').innerHTML,
                 latestID: latestID,
                 oldestID: oldestID
-            }, 
-            function(res){
+            }, function(res){
 
                 if(res.posts.length > 0 ){
 
-                    console.log('new posts!');
-
-                    //postType.injectpost(res.posts[0]);
                     postType.injectFromDialHome(res.posts);
 
                 }else{
 
                     console.log('no new posts.');
+
                 }
-
-
             }
         );
 

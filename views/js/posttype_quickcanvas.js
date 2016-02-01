@@ -192,6 +192,23 @@ postType.add((function(){
                 img.addEventListener('load', function(e){
 
                     // send wall post
+                    _.send(
+                        '/wall',
+                        'wallpost',
+                        {
+                            postOwner: '?user', // if posting from /, both the post owner, and the post page should belong to the logged in user
+                            postTo: _.get('wall_username').innerHTML,
+                            postType: 'quickcanvas',
+                            postContent: {
+                                thum: _.getImageDataURL(img),
+                                code: post.getElementsByClassName('quickcanvas_code')[0].value
+                            }
+                      
+                        },
+                        postType.injectPost
+                   );
+
+/*
 	            _http.sendWallPost(
                         {
                             postOwner: '?user', // if posting from /, both the post owner, and the post page should belong to the logged in user
@@ -204,8 +221,8 @@ postType.add((function(){
                       
                         },
                         postType.injectPost
-
                    );
+*/
 
                });
 

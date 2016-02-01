@@ -26,13 +26,13 @@ cat /etc/system-release
 
 <script>
 
-document.getElementById('admin_sendcheck').addEventListener('click', function(){
+// send a command
+_.get('admin_sendcheck').addEventListener('click', function(){
 
+    _.send( '/admin', 'command', {command: _.get('admin_command').value }, function(res){
 
-    _http.sendCommand({command: document.getElementById('admin_command').value }, function(res){
         console.log(res);
-        document.getElementById('admin_screen').value += res.stdout;
-
+        _.get('admin_screen').value += res.stdout;
 
     });
 
