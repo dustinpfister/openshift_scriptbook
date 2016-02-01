@@ -1,5 +1,4 @@
-
-var allHttp = (function(){
+var _http = (function(){
 
     // post to server
     var httpPost = function (path, header, data, done) {
@@ -39,28 +38,52 @@ var allHttp = (function(){
 
     return {
 
+        // generic send function
+        send : function(path, scriptbookHeader, data, done){
+
+            httpPost(path, scriptbookHeader,data, done);
+
+        },
+
+        // ALERT! don't i just need the single send function
+
+        // site wide
+        sendSiteWide : function(path, data, done){
+
+           console.log(path);
+
+            httpPost(path, 'site_wide_dial_home', data, done);
+
+        },
+
+        // send command for admin path
         sendCommand : function(data, done){
 
             httpPost('/admin', 'command', data, done);
 
-        }
+        },
 
-/*
-        // send a wall post
+         // send a wall post
         sendWallPost : function(data, done){
 
-            httpPost('wallpost', data, done);
+            httpPost('/wall','wallpost', data, done);
 
         },
 
         // send a post check
         sendPostCheck : function(data,done){
 
-            httpPost('postcheck',data,done);
+            httpPost('/wall','postcheck',data,done);
+
+        },
+
+        // send command 
+         sendCommand : function(data, done){
+
+            httpPost('/admin', 'command', data, done);
 
         }
-*/
 
-    }
+    };
 
 }());

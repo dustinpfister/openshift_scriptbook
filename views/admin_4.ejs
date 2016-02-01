@@ -24,13 +24,12 @@ cat /etc/system-release
 </textarea>
 </div>
 
-<script src="js/adminhttp.js"></script>
 <script>
 
 document.getElementById('admin_sendcheck').addEventListener('click', function(){
 
 
-    myHttp.sendCommand({command: document.getElementById('admin_command').value }, function(res){
+    _http.sendCommand({command: document.getElementById('admin_command').value }, function(res){
         console.log(res);
         document.getElementById('admin_screen').value += res.stdout;
 

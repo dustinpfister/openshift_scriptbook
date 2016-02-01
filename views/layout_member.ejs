@@ -68,16 +68,18 @@ body{
          <a href="/logout">logout</a> ,
          <a id="messagelink" href="/messbox">messages</a> ];
      </p>
+
+   <script src="/js/http.js" ></script>
+
     
     <%- body %>
 
     <% include foot %>
 
-    <script src="/js/allhttp.js"></script>
 
 <script>
 
-    allhttp.sendSiteWide('<%= data.activePath %>', {one: 'yes'}, function(info){
+    _http.sendSiteWide('<%= data.activePath %>', {one: 'yes'}, function(info){
         
         console.log(info);
 

@@ -192,7 +192,7 @@ postType.add((function(){
                 img.addEventListener('load', function(e){
 
                     // send wall post
-	            myHttp.sendWallPost(
+	            _http.sendWallPost(
                         {
                             postOwner: '?user', // if posting from /, both the post owner, and the post page should belong to the logged in user
                             postTo: _.get('wall_username').innerHTML,

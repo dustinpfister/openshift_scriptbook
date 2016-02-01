@@ -48,7 +48,7 @@ postType.add((function(){
                 }
 
                 // send home new say.
-                myHttp.sendWallPost(
+                _http.sendWallPost(
                     {
                         postOwner: '?user', // ALERT! the post owner should always just be the logged in user, this is not needed.
                         postTo: _.get('wall_username').innerHTML, // ALERT! this can be discorvered server side as well by looking at the namespace.
