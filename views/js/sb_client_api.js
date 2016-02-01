@@ -1,13 +1,13 @@
-var _ = (function(){ 
+var _ = (function () {
 
     // post to server
     var httpPost = function (path, header, data, done) {
         var xhr = new XMLHttpRequest();
 
         // default done callback
-        if(done === undefined){
+        if (done === undefined) {
 
-            done = function(response){
+            done = function (response) {
 
                 console.log('you did not give a callback for the response but here it is in the console: ');
                 console.log(response);
@@ -40,31 +40,33 @@ var _ = (function(){
     return {
 
         // get by id
-        get : function(id){ return document.getElementById(id);},
+        get: function (id) {
+            return document.getElementById(id);
+        },
 
         // image to DataURL
-        getImageDataURL : function(img) {
-        
-        // Create an empty canvas element
-        var canvas = document.createElement("canvas"),
-        ctx = canvas.getContext("2d");
-        canvas.width = img.width;
-        canvas.height = img.height;
+        getImageDataURL: function (img) {
 
-        // Copy the image contents to the canvas
-        ctx.drawImage(img, 0, 0);
+            // Create an empty canvas element
+            var canvas = document.createElement("canvas"),
+                ctx = canvas.getContext("2d");
+            canvas.width = img.width;
+            canvas.height = img.height;
 
-        var dataURL = canvas.toDataURL("image/png");
+            // Copy the image contents to the canvas
+            ctx.drawImage(img, 0, 0);
 
-        console.log(dataURL.length);
+            var dataURL = canvas.toDataURL("image/png");
 
-        return dataURL;  //dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-    },
+            console.log(dataURL.length);
+
+            return dataURL; //dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+        },
 
         // generic HTTP send function
-        send : function(path, scriptbookHeader, data, done){
+        send: function (path, scriptbookHeader, data, done) {
 
-            httpPost(path, scriptbookHeader,data, done);
+            httpPost(path, scriptbookHeader, data, done);
 
         }
 

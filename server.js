@@ -1,4 +1,4 @@
-#!/bin/env node
+// #!/bin/env node
 
 /*    OpenShift_scriptbook
  *    Copyright 2015-2016 by Dustin Pfister (GPL-3.0)
