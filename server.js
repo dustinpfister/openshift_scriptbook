@@ -379,6 +379,21 @@ app.get(/wall(\/.*)?/, function(req, res) {
 });
 app.post(/wall(\/.*)?/, function(req, res) {
 
+    
+    if (req.get('scriptbook-post') === 'postupdate') {
+        
+      
+        wallpost.postUpdate(req, function(post){
+           
+            console.log('done with post update');
+            console.log(post);
+            
+        });
+        
+    }
+    
+    
+    
     // if wall post
     if (req.get('scriptbook-post') === 'wallpost') {
 
